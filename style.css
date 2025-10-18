@@ -1,0 +1,116 @@
+:root {
+    --altura-andar: 150px;
+    --cor-predio: black;
+    --cor-elevador: blue;
+    --cor-borda: grey;
+    --cor-texto: white;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: black;
+    color: var(--cor-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.simulador {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.predio {
+    position: relative;
+    width: 200px;
+    height: calc(var(--altura-andar) * 4);
+    background-color: var(--cor-predio);
+    border: 3px solid var(--cor-borda);
+}
+
+.andar {
+    height: var(--altura-andar);
+    border-bottom: 2px dashed var(--cor-borda);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 15px;
+}
+
+.andar:last-child {
+    border-bottom: none;
+}
+
+.andar span {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px;
+    background-color: grey;
+    color: var(--cor-texto);
+}
+
+.elevador-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100%;
+}
+
+.elevador {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: var(--altura-andar);
+    background-color: var(--cor-elevador);
+}
+
+.controles {
+    width: 250px;
+}
+
+.painel-controle, .log-container {
+    background-color: var(--cor-predio);
+    border: 3px solid var(--cor-borda);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.painel-controle h2, .log-container h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.botoes-painel {
+    display: grid;
+    gap: 10px;
+}
+
+.botoes-painel button {
+    width: 100%;
+    height: 60px;
+    font-size: 1.5rem;
+}
+
+.log-container {
+    margin-top: 20px;
+    height: 180px;
+}
+
+#log {
+    font-family: monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+}
