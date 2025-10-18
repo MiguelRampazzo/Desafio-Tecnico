@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Elevador Simples</title>
+    <title>Gerador de Senhas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="simulador">
-        <div class="predio">
-            <div class="elevador-container">
-                <div class="elevador" id="elevador"></div>
-            </div>
 
-            <div class="andar"><span>4</span></div>
-            <div class="andar"><span>3</span></div>
-            <div class="andar"><span>2</span></div>
-            <div class="andar"><span>1</span></div>
+    <div class="container">
+        <h1>Gerador de Senhas</h1>
+
+        <div class="display-container">
+            <input type="text" id="senhaGerada" placeholder="Sua senha segura" readonly>
+            <button id="btnCopiar" title="Copiar para a área de transferência">📋</button>
         </div>
 
-        <div class="controles">
-            <div class="painel-controle">
-                <h2>Painel de Controle</h2>
-                <div class="botoes-painel">
-                    <button data-andar="4">4</button>
-                    <button data-andar="3">3</button>
-                    <button data-andar="2">2</button>
-                    <button data-andar="1">1</button>
-                </div>
+        <div class="settings">
+            <div class="setting">
+                <label for="comprimento">Comprimento da Senha</label>
+                <input type="number" id="comprimento" min="4" max="32" value="12">
             </div>
-            <div class="log-container">
-                <h3>Status do Elevador</h3>
-                <div id="log">Aguardando no 1º andar...</div>
+            
+            <div class="setting">
+                <label for="maiusculas">Incluir Letras Maiúsculas (A-Z)</label>
+                <input type="checkbox" id="maiusculas" checked>
+            </div>
+            
+            <div class="setting">
+                <label for="minusculas">Incluir Letras Minúsculas (a-z)</label>
+                <input type="checkbox" id="minusculas" checked>
+            </div>
+            
+            <div class="setting">
+                <label for="numeros">Incluir Números (0-9)</label>
+                <input type="checkbox" id="numeros" checked>
+            </div>
+
+            <div class="setting">
+                <label for="simbolos">Incluir Símbolos (!@#$...)</label>
+                <input type="checkbox" id="simbolos">
             </div>
         </div>
+
+        <button class="btn btn-large" id="btnGerar">Gerar Senha</button>
     </div>
 
-    <script src="Elevador.js" defer></script>
+    <script src="Gerador_senha.js"></script>
 </body>
 </html>
