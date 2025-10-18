@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Elevador Simples</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="simulador">
+        <div class="predio">
+            <div class="elevador-container">
+                <div class="elevador" id="elevador"></div>
+            </div>
+
+            <div class="andar"><span>4</span></div>
+            <div class="andar"><span>3</span></div>
+            <div class="andar"><span>2</span></div>
+            <div class="andar"><span>1</span></div>
+        </div>
+
+        <div class="controles">
+            <div class="painel-controle">
+                <h2>Painel de Controle</h2>
+                <div class="botoes-painel">
+                    <button data-andar="4">4</button>
+                    <button data-andar="3">3</button>
+                    <button data-andar="2">2</button>
+                    <button data-andar="1">1</button>
+                </div>
+            </div>
+            <div class="log-container">
+                <h3>Status do Elevador</h3>
+                <div id="log">Aguardando no 1º andar...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Elevador.js" defer></script>
+</body>
+</html>
