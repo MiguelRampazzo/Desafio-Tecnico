@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Números Romanos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="converter-container">
+        <h1>Conversor Romano</h1>
+        
+        <div class="converter-wrapper">
+            <div class="input-group" id="group-romano">
+                <label for="romanoInput" id="label-romano">Romano</label>
+                <input type="text" id="romanoInput" placeholder="Ex: MMXV">
+            </div>
+
+            <button id="btnInverter" title="Inverter conversão">⇄</button>
+
+            <div class="input-group" id="group-decimal">
+                <label for="decimalInput" id="label-decimal">Decimal</label>
+                <input type="number" id="decimalInput" placeholder="Ex: 2015">
+            </div>
+        </div>
+
+        <button id="btnConverter">Converter</button>
+
+        <div class="resultado-area">
+            <p id="resultadoTexto"></p>
+        </div>
+    </div>
+
+    <script src="Romano.js"></script>
+</body>
+</html>
