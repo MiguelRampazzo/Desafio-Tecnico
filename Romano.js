@@ -6,28 +6,25 @@ const resultadoTexto = document.getElementById('resultadoTexto');
 const labelRomano = document.getElementById('label-romano');
 const labelDecimal = document.getElementById('label-decimal');
 
+
 function romanoParaDecimal(numeroRomano) {
     const mapaRomano = { 'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000 };
     const romano = numeroRomano.toUpperCase();
     let valorDecimal = 0;
     
     for (let i = 0; i < romano.length; i++) {
-        if (!mapaRomano[romano[i]]) {
-            return { erro: `O símbolo '${romano[i]}' não é válido.` };
-        }
-
         const valorAtual = mapaRomano[romano[i]];
-        const valorProximo = mapaRomano[romano[i + 1]];
+        const valorProximo = mapaRomano[romano[i + 1]]; // Pega o próximo valor
 
-        if (valorProximo && valorAtual < valorProximo) {
-            valorDecimal -= valorAtual;
+        // Se o próximo valor existir e for maior, subtraímos (ex: IV, IX, XL)
+        if (valorProximo !== undefined && valorAtual < valorProximo) {
+            valorDecimal = valorDecimal - valorAtual;
         } else {
-            valorDecimal += valorAtual;
+            valorDecimal = valorDecimal + valorAtual;
         }
     }
     return { resultado: valorDecimal };
 }
-
 
 function decimalParaRomano(numeroDecimal) {
     if (numeroDecimal <= 0 || numeroDecimal >= 4000) {
@@ -47,10 +44,11 @@ function decimalParaRomano(numeroDecimal) {
     let resultadoRomano = '';
     let num = numeroDecimal;
 
-    for (const par of mapaValores) {
+    for (let i = 0; i < mapaValores.length; i++) {
+        const par = mapaValores[i];
         while (num >= par.valor) {
-            resultadoRomano += par.simbolo;
-            num -= par.valor;
+            resultadoRomano = resultadoRomano + par.simbolo;
+            num = num - par.valor;
         }
     }
     return { resultado: resultadoRomano };
@@ -59,51 +57,86 @@ function decimalParaRomano(numeroDecimal) {
 
 let modoRomanoParaDecimal = true;
 
-function atualizarInterface() {
-    if (modoRomanoParaDecimal) {
-        romanoInput.disabled = false;
-        decimalInput.disabled = true;
-        romanoInput.focus();
-        labelRomano.style.fontWeight = 'bold';
-        labelDecimal.style.fontWeight = 'normal';
-    } else {
-        romanoInput.disabled = true;
-        decimalInput.disabled = false;
-        decimalInput.focus();
-        labelRomano.style.fontWeight = 'normal';
-        labelDecimal.style.fontWeight = 'bold';
-    }
+function definirEstadoInicial() {
+    romanoInput.disabled = false;
+    decimalInput.disabled = true;
+    labelRomano.style.fontWeight = 'bold';
+    labelDecimal.style.fontWeight = 'normal';
     romanoInput.value = '';
     decimalInput.value = '';
     resultadoTexto.textContent = '';
 }
 
-btnInverter.addEventListener('click', () => {
-    modoRomanoParaDecimal = !modoRomanoParaDecimal;
-    atualizarInterface();
+btnInverter.addEventListener('click', function() {
+    if (modoRomanoParaDecimal === true) {
+        modoRomanoParaDecimal = false;
+    } else {
+        modoRomanoParaDecimal = true;
+    }
+
+    if (modoRomanoParaDecimal) {
+        romanoInput.disabled = false;
+        decimalInput.disabled = true;
+        labelRomano.style.fontWeight = 'bold';
+        labelDecimal.style.fontWeight = 'normal';
+    } else {
+        // Mudar para o modo Decimal -> Romano
+        romanoInput.disabled = true;
+        decimalInput.disabled = false;
+        labelRomano.style.fontWeight = 'normal';
+        labelDecimal.style.fontWeight = 'bold';
+    }
+
+    romanoInput.value = '';
+    decimalInput.value = '';
+    resultadoTexto.textContent = '';
 });
 
-btnConverter.addEventListener('click', () => {
-    resultadoTexto.textContent = '';
+btnConverter.addEventListener('click', function() {
+    
     resultadoTexto.classList.remove('erro');
 
-    let resultado;
-    if (modoRomanoParaDecimal) {
-        if (!romanoInput.value) return;
-        resultado = romanoParaDecimal(romanoInput.value);
-        decimalInput.value = resultado.resultado || '';
+    if (modoRomanoParaDecimal === true) {
+        const valorRomano = romanoInput.value;
+
+        if (valorRomano === '') {
+            resultadoTexto.textContent = 'Por favor, insira um número romano.';
+            resultadoTexto.classList.add('erro');
+            return;
+        }
+
+        const resultado = romanoParaDecimal(valorRomano);
+
+        if (resultado.erro) {
+            resultadoTexto.textContent = resultado.erro;
+            resultadoTexto.classList.add('erro');
+            decimalInput.value = '';
+        } else {
+            decimalInput.value = resultado.resultado;
+            resultadoTexto.textContent = 'Resultado: ' + resultado.resultado;
+        }
+
     } else {
-        if (!decimalInput.value) return;
-        resultado = decimalParaRomano(parseInt(decimalInput.value, 10));
-        romanoInput.value = resultado.resultado || '';
-    }
-    
-    if (resultado.erro) {
-        resultadoTexto.textContent = resultado.erro;
-        resultadoTexto.classList.add('erro');
-    } else {
-        resultadoTexto.textContent = `Resultado: ${resultado.resultado}`;
+        const valorDecimal = decimalInput.value;
+
+        if (valorDecimal === '') {
+            resultadoTexto.textContent = 'Por favor, insira um número decimal.';
+            resultadoTexto.classList.add('erro');
+            return;
+        }
+
+        const numeroParaConverter = parseInt(valorDecimal, 10);
+        const resultado = decimalParaRomano(numeroParaConverter);
+
+        if (resultado.erro) {
+            resultadoTexto.textContent = resultado.erro;
+            resultadoTexto.classList.add('erro');
+            romanoInput.value = '';
+        } else {
+            romanoInput.value = resultado.resultado;
+            resultadoTexto.textContent = 'Resultado: ' + resultado.resultado;
+        }
     }
 });
 
-atualizarInterface();
+definirEstadoInicial();
