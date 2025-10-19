@@ -1,36 +1,37 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const elevadorEl = document.getElementById('elevador');
-    const logEl = document.getElementById('log');
-    const botoesPainel = document.querySelectorAll('.botoes-painel button');
+const elevadorEl = document.getElementById('elevador');
+const logEl = document.getElementById('log');
+const botoesPainel = document.querySelectorAll('.botoes-painel button');
 
-    let andarAtual = 1;
+let andarAtual = 1;
 
-    function adicionarLog(mensagem) {
-        logEl.textContent = mensagem;
-        console.log(mensagem);
-    }
+for (let i = 0; i < botoesPainel.length; i++) {
+    const botao = botoesPainel[i];
 
-    function moverPara(andarDestino) {
-        if (andarAtual === andarDestino) {
-            adicionarLog(`Elevador já está no ${andarAtual}º andar.`);
+    botao.addEventListener('click', function() {
+        const andarDesejado = parseInt(botao.dataset.andar);
+
+        if (andarAtual === andarDesejado) {
+            const mensagem = 'Elevador já está no ' + andarAtual + 'º andar.';
+            
+            logEl.textContent = mensagem;
+            console.log(mensagem);
+            
             return;
         }
 
-        adicionarLog(`Movendo do ${andarAtual}º para o ${andarDestino}º andar.`);
+        const mensagemMovendo = 'Movendo do ' + andarAtual + 'º para o ' + andarDesejado + 'º andar.';
+        logEl.textContent = mensagemMovendo;
+        console.log(mensagemMovendo);
 
-        const posicaoBottom = (andarDestino - 1) * 150;
-        elevadorEl.style.bottom = `${posicaoBottom}px`;
+        const posicaoBottom = (andarDesejado - 1) * 150;
 
-        andarAtual = andarDestino;
+        elevadorEl.style.bottom = posicaoBottom + 'px';
 
-        adicionarLog(`Elevador chegou ao ${andarAtual}º andar.`);
-    }
+        andarAtual = andarDesejado;
 
-    botoesPainel.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const andarDesejado = parseInt(botao.dataset.andar);
-            
-            moverPara(andarDesejado);
-        });
+        const mensagemChegou = 'Elevador chegou ao ' + andarAtual + 'º andar.';
+        logEl.textContent = mensagemChegou;
+        console.log(mensagemChegou);
+        
     });
-});
+}
